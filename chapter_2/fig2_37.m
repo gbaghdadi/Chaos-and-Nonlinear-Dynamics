@@ -1,0 +1,39 @@
+%--------------------------------------------------------------------------%
+%----------------- Simulation of a map using simulink model ---------------%
+%--------------------------------------------------------------------------%
+% this function can be used to simulate a map 
+% (x'= u - x^2) considering u = 2 and initial condition = -1) 
+% using a Simulink model named "fig2_36_simulink"
+
+% NOTE: before running this code, open the Simulink file "fig2_36_simulink"
+
+% created December 2022
+% This function can be used to reproduced figure 2-37 of the book
+% titled "Chaos and Nonlinear Dynamics: systems analysis and signals quantification", 
+% written by Ali Motie Nasrabadi and Golnaz Baghdadi 
+% in Persion 2021
+
+clear all
+
+set_param('fig2_36_simulink/u', 'Value','2')   % set the value of A
+set_param('fig2_36_simulink/Integrator','InitialCondition','-1')   % set the value of initial condition
+set_param('fig2_36_simulink', 'StopTime', '10') % setting stop simulation time to 10 secs
+
+sim('fig2_36_simulink')  % simulate the simulink file of the Logistic model 
+load X % loading the output of the simulated model
+load Xdot % loading the output of the simulated model
+
+% plot
+subplot(1,2,1)
+plot(X(2,:), Xdot(2,:))
+hold on
+plot(X(2,1), Xdot(2,1),'o')
+xlabel('X'); ylabel('X''')
+xlim([-1.5,2]); ylim([-1.5,2.5])
+
+subplot(1,2,2)
+plot(X(1,:), X(2,:))
+xlabel('t'); ylabel('X(t)')
+ylim([-1,1.5])
+grid on
+

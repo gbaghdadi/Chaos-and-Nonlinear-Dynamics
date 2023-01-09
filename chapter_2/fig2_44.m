@@ -1,0 +1,81 @@
+%--------------------------------------------------------------------------%
+%----------------- Simulation of a map using simulink model ---------------%
+%--------------------------------------------------------------------------%
+% this function can be used to simulate a map
+% x1' = -x2 + x1 {u - (x1^2 + x2^2)}
+% x2' = +x1 + x2 {u - (x1^2 + x2^2)}
+% considering u = 4, -1, 0 
+% using a Simulink model named "fig2_43_simulink"
+
+% NOTE: before running this code, open the Simulink file "fig2_43_simulink"
+
+% created December 2022
+% This function can be used to reproduced figure 2-44 of the book
+% titled "Chaos and Nonlinear Dynamics: systems analysis and signals quantification", 
+% written by Ali Motie Nasrabadi and Golnaz Baghdadi 
+% in Persion 2021
+clear all
+
+
+set_param('fig2_43_simulink/u', 'Value','4')   % set the value of u
+set_param('fig2_43_simulink/Integrator1','InitialCondition','0.01')   % set the value of initial condition
+set_param('fig2_43_simulink/Integrator2','InitialCondition','0.01')   % set the value of initial condition
+
+set_param('fig2_43_simulink', 'StopTime', '20') % setting stop simulation time to 20 secs
+
+sim('fig2_43_simulink')  % simulate the simulink file of the Logistic model 
+load X1 % loading the output of the simulated model
+load X2 % loading the output of the simulated model
+
+% plot
+subplot(2,2,2)
+plot(X1(2,:), X2(2,:))
+hold on
+plot(X1(2,1), X2(2,1),'o')
+xlabel('X1'); ylabel('X2')
+xlim([-3,3]); ylim([-3,3])
+title('u = 4')
+% ----- Changing the value of u to -1
+
+set_param('fig2_43_simulink/u', 'Value','-1')   % set the value of u
+set_param('fig2_43_simulink/Integrator1','InitialCondition','-2.2')   % set the value of initial condition
+set_param('fig2_43_simulink/Integrator2','InitialCondition','1')   % set the value of initial condition
+
+set_param('fig2_43_simulink', 'StopTime', '20') % setting stop simulation time to 20 secs
+
+sim('fig2_43_simulink')  % simulate the simulink file of the Logistic model 
+load X1 % loading the output of the simulated model
+load X2 % loading the output of the simulated model
+
+% plot
+subplot(2,2,1)
+plot(X1(2,:), X2(2,:))
+hold on
+plot(X1(2,1), X2(2,1),'o')
+xlabel('X1'); ylabel('X2')
+xlim([-3,3]); ylim([-3,3])
+title('u = -1')
+
+% ----- Changing the value of u to 0
+
+set_param('fig2_43_simulink/u', 'Value','0')   % set the value of u
+set_param('fig2_43_simulink/Integrator1','InitialCondition','-2.2')   % set the value of initial condition
+set_param('fig2_43_simulink/Integrator2','InitialCondition','1')   % set the value of initial condition
+
+set_param('fig2_43_simulink', 'StopTime', '20') % setting stop simulation time to 20 secs
+
+sim('fig2_43_simulink')  % simulate the simulink file of the Logistic model 
+load X1 % loading the output of the simulated model
+load X2 % loading the output of the simulated model
+
+% plot
+subplot(2,2,3)
+plot(X1(2,:), X2(2,:))
+hold on
+plot(X1(2,1), X2(2,1),'o')
+xlabel('X1'); ylabel('X2')
+xlim([-3,3]); ylim([-3,3])
+title('u = 0')
+
+
+
